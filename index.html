@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Deep learning for music separation</title>
+		<title>open-unmix for music separation</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/lirmm.css">
@@ -30,22 +30,18 @@
 				<section id="cover" data-background="css/theme/img/background-red.jpg" data-background-repeat="no-repeat" data-background-size="cover" data-background-position="0 0" data-state="no-title-footer no-progressbar has-dark-background">
 					<h2 id="covertitle">Deep learning for music separation</h2>
 					<p style="margin-top:-3%; margin-left:4%" id="coverauthors">
-						<b>Antoine Liutkus</b>, Inria and LIRMM, Montpellier<br/>
-						<i>antoine.liutkus@inria.fr</i><br />
-						</p>
+						<b>Antoine Liutkus</b>, <b>Fabian-Robert Stöter</b><br/>
+						<i>Inria and LIRMM, Montpellier</i><br/>
+						</br/>
 					</p>
 					<p style="margin-top:20%;  margin-left:5%">
-					October 14th, 2019
+					January 30th, 2020
 					</p>
 					<p>
 					<img src="css/theme/img/inria-cover.svg" id="inria" class="logo" alt="">
 				</section>
-
-<section>
-	<h1>Music Unmixing/Separation</h1>
-	<img width="45%" style="float:left" src="assets/intro1.png" alt="">
-	<img class="fragment" width="45%" src="assets/intro2.png" alt="">
-</section>
+				<section class="fig-container" data-file="https://www.youtube.com/embed/IxLnoy-GzqI">
+				</section>
 
 <section>
 	<h1>Applications</h1>
@@ -59,57 +55,6 @@
 		<li>Music Education</li>
 		<li>Pre-processing for MIR</li>
 	</ul>
-</section>
-
-<!-- <section>
-	<iframe class="stretch" data-src="audio/player_x.html"></iframe>
-</section> -->
-
-
-<section>
-	<h1>Motivations of this talk</h1>
-		<h2>Understand source separation</h2>
-		<ul>
-			<li>Signal processing aspects</li>
-			<li>Quick overview of the topic</li>
-			<li>Discriminative and generative methods</li>
-		</ul>
-		<p>
-		<h2>Understand deep neural nets</h2>
-		<ul>
-			<li>Fundamental models for static/temporal data</li>
-			<li>A starter on training</li>
-			<li>Models for audio</li>
-		</ul>
-		<p>
-		<h2>Python practice</h2>
-		<ul>
-			<li>How to implement and train deep nets with Pytorch</li>
-			<li>Presenting <code>open-unmix</code>
-				<a href=https://github.com/sigsep/open-unmix-pytorch><i class="fab fa-github"></i>/sigsep/open-unmix-pytorch</a>
-			</li>
-			<li>MIT-licensed state of the art performance</li>
-		</ul></li>
-	</ul>
-	<div style="margin-top:8%; color:gray">
-	All slides and material available at:
-	<a href=https://github.com/sigsep><i class="fab fa-github"></i>/sigsep</a>
-</div>
-</section>
-
-<section>
-	<h1>What <code>open-unmix</code> can achieve</h1>
-	<iframe src='http://umx-sisec18.s3-website.eu-west-3.amazonaws.com/' style='height:500px;width:100%'></iframe>
-</section>
-
-<section>
-	<h1>Signal processing</h1>
-	<h2>Time-frequency representations</h2>
-</section>
-
-<section>
-	<h1>Time frequency representations</h1>
-	<img width="100%" style="margin-top:5%; float:left" src="assets/STFT.svg" alt="">
 </section>
 
 <section data-background-transition="none" data-state="no-title-footer"  data-background-image="assets/demotrack/mix.jpg">
@@ -131,7 +76,6 @@
 	</section>
 </section>
 
-
 <section>
 	<h1>Source separation: usual workflow</h1>
 	<img  style="margin-top:2%; float:left" width="160%" src="assets/workflow1.svg" alt="">
@@ -150,506 +94,22 @@
 </section>
 
 <section>
-	<h1>The core ingredient</h1>
-	<img  style="margin-top:5%; float:left" width="160%" src="assets/DNN.svg" alt="">
-	<ul style="margin-top:5%" class="fragment">
-		<li>Input is a sequence of spectra from the mixture</li>
-		<li>Output is a sequence of spectra from the target</li>
+	<h1>Open-unmix: state-of-the-art for music demixing</h1>
+	<img style="margin-top:2%; float:left" width="160%" src="assets/UMX6.svg" alt="">
+	
+	<ul style="margin-top:2em">
+		<li>Website: <a href="open.unmix.app">open.unmix.app</a></li>
+		<li>Winner PyTorch Hackathon 2019: <a href="https://pytorch.devpost.com">pytorch.devpost.com</a></li>
 	</ul>
-</section>
-
-<section>
-	<h1>A starter on deep neural networks</h1>
-	<h6 style="margin-top:50%; color:gray">
-	Y. LeCun, et al. "Deep learning". nature, 521(7553), 436 (2015).
-</h6>
-</section>
-
-<section>
-	<h1>Static data</h1>
-	<h2>The basic fully connected layer</h2>
-	<img width="80%" src="assets/one_layer.svg" alt="">
-	<img class="fragment" style="float:right" width="60%" src="assets/non_linearities.svg" alt="">
-</section>
-
-<section>
-	<h1>Static data</h1>
-	<h2>Basic fully connected network</h2>
-	<img  style="margin-top:5%" width="100%" src="assets/several_layers.svg" alt="">
-</section>
-
-<section>
-	<h1>Static data</h1>
-	<h2>A usual deep network</h2>
-	<img  style="margin-top:5%" width="100%" src="assets/several_layers_general.svg" alt="">
-	<ul class="fragment">
-		<li>Cascading linear and non-linear operations augments expressive power</li>
-		<li>7 millions parameters in our case</li>
-	</ul>
-</section>
-
-<section>
-	<h1>Temporal data</h1>
-	<h6 style="margin-top:50%; color:gray">
-		colah's blog, <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a>, 2015.
-	</h6>
-</section>
-
-<section>
-	<section>
-		<h1>Temporal data</h1>
-		<h2>From fully connected to the simple recurrent net</h2>
-		<img  style="float:center" width="90%" src="assets/recurrent_layer_1.svg" alt="">
-	</section>
-	<section>
-		<h1>Temporal data</h1>
-		<h2>From fully connected to the simple recurrent net</h2>
-		<img  style="float:center" width="90%" src="assets/recurrent_layer_2.svg" alt="">
-	</section>
-	<section>
-		<h1>Temporal data</h1>
-		<h2>From fully connected to the simple recurrent net</h2>
-		<img  style="float:center" width="90%" src="assets/time_distributed_dense.svg" alt="">
-	</section>
-	<section>
-		<h1>Temporal data</h1>
-		<h2>From fully connected to the simple recurrent net</h2>
-		<img  style="float:center" width="90%" src="assets/recurrent_layer_3.svg" alt="">
-	</section>
-
-	<section>
-		<h1>Temporal data</h1>
-		<h2>The simple recurrent net</h2>
-		<img  style="float:left" width="24%" src="assets/recurrent_layer_4.svg" alt="">
-		<ul>
-			<li>$y_{t}=f\left(linear\left\{ x_{t},y_{t-1}\right\} \right)$</li>
-			<li>Similar to a Markov model
-				<ul>
-					<li>Exponential decay of information</li>
-					<li>Vanishing or exploding gradient for training</li>
-				</ul></li>
-		</ul>
-		<p>
-		<ul>
-			<li>Limited for long-term dependencies</li>
-		</ul>
-		<h6 style="margin-top:30%; color:gray">
-			P. Huang, et al. "Deep learning for monaural speech separation". (2014) ICASSP.
-		</h6>
-	</section>
-</section>
-
-<section>
-	<section>
-		<h1>Temporal data</h1>
-		<h2>The long short term memory (LSTM)</h2>
-		<img  style="margin-top:2%; float:center" width="100%" src="assets/lstm_1.svg" alt="">
-	</section>
-	<section>
-		<h1>Temporal data</h1>
-		<h2>The long short term memory (LSTM)</h2>
-		<img  style="margin-top:2%; float:center" width="100%" src="assets/lstm_2.svg" alt="">
-	</section>
-	<section>
-		<h1>Temporal data</h1>
-		<h2>The long short term memory (LSTM)</h2>
-		<img  style="margin-top:2%; float:center" width="80%" src="assets/lstm_3.svg" alt="">
-	</section>
-</section>
-
-<section>
-	<section>
-		<h1>Temporal data</h1>
-		<h2>The bi-LSTM</h2>
-		<img  style="margin-top:2%; float:left" width="50%" src="assets/blstm_1.svg" alt="">
-		<ul>
-			<li>LSTM are causal systems</li>
-			<li>Predicts future from past</li>
-		</ul>
-	</section>
-	<section>
-		<h1>Temporal data</h1>
-		<h2>The bi-LSTM</h2>
-		<img  style="margin-top:2%; float:left" width="50%" src="assets/blstm_2.svg" alt="">
-		<ul>
-			<li>We can use anti-causal LSTM</li>
-			<li>Different predictions!</li>
-		</ul>
-	</section>
-	<section>
-		<h1>Temporal data</h1>
-		<h2>The bi-LSTM</h2>
-		<img  style="margin-top:2%; float:left" width="50%" src="assets/blstm_3.svg" alt="">
-		<ul>
-			<li>Independent forward and backward</li>
-			<li>Outputs can be concatenated</li>
-			<li class="fragment">Outputs can be summed<p>
-			<img  style="margin-top:2%; float:center" width="100%" src="assets/combine_blstm.svg" alt="">
-		</li>
-		</ul>
-	</section>
-
-</section>
-
-<section>
-	<h1>Training a DNN</h1>
+	<p></p>
+	<h4>Motivation</h4>
 	<ul>
-		<li>Data vocabulary</li>
-		<li>A music separation dataset</li>
-		<li>Gradient descent</li>
+		<li>open-source state of the art implementation</li>
+	<li>Leverages upon our <a href=https://github.com/sigsep><i class="fab fa-github"></i>/sigsep</a> community effort (340<i class="fa fa-book" aria-hidden="true"></i>, 
+		600+ <i class="fa fa-star" aria-hidden="true"></i>)</li> 
 	</ul>
 </section>
 
-
-<section>
-	<h1>Data vocabulary</h1>
-	<img  style="margin-top:5%" width="100%" src="assets/training_dataset.svg" alt="">
-</section>
-
-<section>
-	<h1>Data vocabulary</h1>
-	<img  style="margin-top:5%" width="100%" src="assets/training_dataset_batch.svg" alt="">
-</section>
-
-<section>
-	<h1>Data vocabulary</h1>
-	<img  style="margin-top:5%" width="100%" src="assets/training_dataset_learning.svg" alt="">
-</section>
-
-<section>
-	<h1>Data vocabulary</h1>
-	<img  style="margin-top:5%" width="100%" src="assets/one_epoch.gif" alt="">
-</section>
-
-<section>
-	<h1>The MUSDB18 dataset</h1>
-	<img width="60%" src="assets/hero.svg" alt="">
-	<img width="320px" style="float: right" src="assets/ni_logo.png" alt="">
-
-	<ul>
-		<li>100 train / 50 test full tracks
-			<ul>
-				<div>$\Rightarrow$ with groundtruth sources<p></div>
-			</ul>
-		</li>
-
-		<li>Mastered with pro. digital audio workstations<p></li>
-		<li>Parser and Evaluation tools in <i class="fab fa-python"></i>
-			<ul>
-				<div><a href=https://sigsep.github.io/datasets/musdb.html><i class="fab fa-github"></i>/sigsep/datasets</a></div>
-			</ul>
-		</li>
-	</ul>
-</section>
-
-<section>
-	<h1>Training procedure</h1>
-	<img width="100%" style="float:center" src="assets/sample_supervised_temporal.svg" alt="">
-</section>
-
-<section>
-	<h1>Training procedure</h1>
-	<img  style="margin-top:5%; float:center" width="100%" src="assets/training_networks_0.svg" alt="">
-</section>
-
-<section>
-	<h1>Training procedure</h1>
-	<img  style="margin-top:5%; float:center" width="100%" src="assets/training_networks_1.svg" alt="">
-</section>
-
-<section>
-	<h1>Training procedure</h1>
-	<img  style="margin-top:5%; float:center" width="100%" src="assets/training_networks_2.svg" alt="">
-</section>
-
-<section>
-	<h1>Gradient descent</h1>
-	<img  class="fragment" data-fragment-index="4" style="margin-top:5%; float:right" width="43%" src="assets/gradient_descent.gif" alt="">
-	<ul>
-		<li>Update $\Theta$ to reduce the loss!</li>
-		<div class="fragment" data-fragment-index="1">$loss\leftarrow \sum_{(x,y)\in batch}cost\left(y_\Theta\left(x\right), y\right)$</div>
-		<p>
-		<li class="fragment" data-fragment-index="2">We can compute $\frac{\partial loss}{\partial\Theta_{i}}$ for any parameter $\Theta_i$
-			<ul>
-				<div>$\Rightarrow$ "The influence of $\Theta_i$ on the error"</div>
-				<li>It's the <strong>gradient</strong></li>
-				<li>Computed through <strong>backpropagation</strong></li>
-			</ul>
-		</li><p>
-		<li class="fragment" data-fragment-index="3">A simple optimization: $\Theta_i\leftarrow \Theta_i - \lambda \frac{\partial loss}{\partial\Theta_{i}}$
-			<ul>
-				<div>$\Rightarrow$ It's the <strong>stochastic gradient descent</strong></div>
-				<li>$\lambda$ is the <strong>learning rate</strong></li>
-			</ul>
-		<p></li>
-	</ul>
-	<p>
-</section>
-
-<section>
-	<h1>Gradient descent</h1>
-	<h2>Learning rate wisdom</h2>
-	<img  style="margin-top:5%; " width="45%" src="assets/gradient_descent_big.gif" alt="">
-	<!-- <img  style="margin-top:5%; float:center" width="33%" src="assets/gradient_descent.gif" alt=""> -->
-	<img  style="margin-top:5%; " width="40%" src="assets/learningrates.jpg" alt="">
-	<h6 style="margin-top:10%; color:gray">
-		Leonardo Araujo dos Santos, <a href="https://leonardoaraujosantos.gitbooks.io/artificial-inteligence/content/model_optimization.html">Artificial Intelligence</a>, 2017.
-	</h6>
-</section>
-
-<section>
-	<section>
-		<h1>The <code>open-unmix</code> (UMX) model</h1>
-		<a href=https://github.com/sigsep/open-unmix-pytorch><i class="fab fa-github"></i>/sigsep/open-unmix-pytorch</a>
-
-		<img  style="margin-top:5%; float:left" width="100%" src="assets/UMX1.svg" alt="">
-	</section>
-	<section>
-		<h1>The <code>open-unmix</code> (UMX) model</h1>
-		<a href=https://github.com/sigsep/open-unmix-pytorch><i class="fab fa-github"></i>/sigsep/open-unmix-pytorch</a>
-		<img  style="margin-top:5%; float:left" width="160%" src="assets/UMX2.svg" alt="">
-	</section>
-	<section>
-		<h1>The <code>open-unmix</code> (UMX) model</h1>
-		<a href=https://github.com/sigsep/open-unmix-pytorch><i class="fab fa-github"></i>/sigsep/open-unmix-pytorch</a>
-		<img  style="margin-top:5%; float:left" width="160%" src="assets/UMX3.svg" alt="">
-		<ul style="margin-top:5%;">
-			<li>Input and output scaling are <font color=green>good for training</font>
-			<div><small><font color=gray>S. Uhlich et al. "Deep neural network based instrument extraction from music." ICASSP 2015.</font></small></div></li>
-		</ul>
-	</section>
-	<section>
-		<h1>The <code>open-unmix</code> (UMX) model</h1>
-		<a href=https://github.com/sigsep/open-unmix-pytorch><i class="fab fa-github"></i>/sigsep/open-unmix-pytorch</a>
-		<img  style="margin-top:5%; float:left" width="160%" src="assets/UMX4.svg" alt="">
-		<ul style="margin-top:5%;">
-			<li>Skip-connections  are <font color=green>good for training</font>, but do not increase expressive power
-			<div><small><font color=gray>R. Gribonval et al. "Approximation spaces of deep neural networks." arXiv 2019.</font></small></div></li>
-		</ul>
-	</section>
-	<section>
-		<h1>The <code>open-unmix</code> (UMX) model</h1>
-		<a href=https://github.com/sigsep/open-unmix-pytorch><i class="fab fa-github"></i>/sigsep/open-unmix-pytorch</a>
-		<img  style="margin-top:5%; float:left" width="160%" src="assets/UMX6.svg" alt="">
-		<ul style="margin-top:5%;">
-			<li>Batch-normalization <font color=green>helps training</font> by normalizing each batch.
-			<div><font color=gray><small>Ioffe et al. "Batch normalization: Accelerating deep network training by reducing internal covariate shift". arXiv 2015.</small></font></div></li>
-			<div class="fragment"><font color="red">$\Rightarrow$ But it breaks source absolute scale</font></div>
-			<div class="fragment" style="margin-top:3%;"><i class="far fa-lightbulb"></i> Use the model to predict a filter on the mixture!</div>
-		</ul>
-	</section>
-	<section>
-		<h1>The <code>open-unmix</code> (UMX) model</h1>
-		<a href=https://github.com/sigsep/open-unmix-pytorch><i class="fab fa-github"></i>/sigsep/open-unmix-pytorch</a><p>
-		<img  style="margin-top:2%; float:left" width="160%" src="assets/UMX.svg" alt="">
-		<ul style="margin-top:1%;">
-			<li>The model now learns how to mask the mixture
-			<div class="fragment"><font color="green">$\Rightarrow$ Sources scales should be good</font></div>
-			</li>
-		</ul>
-	</section>
-</section>
-
-<section>
-	<section>
-		<style>
-			.container{display: flex;}
-			.col_umx_l{flex: 1.5;}
-			.col_umx_r{flex: 3;}
-		</style>
-		<h1>Training the final version</h1>
-		<div class="container">
-			<div class="col_umx_l">
-				<img  width="80%" src="assets/UMX_vert.svg" alt="">
-			</div>
-			<div class="col_umx_r">
-				<img width="100%" src="assets/loss_realmagnitude.png" alt="">
-				<ul>
-					<li>Training goes <b>wrong</b>
-						<div class="fragment">$\Rightarrow$ <font color='green'>Works well on training data</font></div>
-						<div class="fragment">$\Rightarrow$ <font color='red'>Does not work on anything else!</font></div>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</section>
-
-	<section>
-		<style>
-			.container{display: flex;}
-			.col_interp_l{flex: 2;}
-			.col_inter_r{flex: 1;}
-		</style>
-		<h1>What happened?!</h1>
-		<div class="container">
-			<div class="col_interp_l">
-				<img  style="margin-top:5%; float:left" width="90%" src="assets/panic.svg" alt="">
-			</div>
-			<div class="col_interp_r">
-				<img  class="fragment" data-fragment-index="1" style="margin-top:5%;" width="49%" src="assets/regression_ideal.svg" alt="">
-				<img  class="fragment" data-fragment-index="2" style="margin-top:5%;" width="49%" src="assets/regression_overfit.svg" alt="">
-				<div class="fragment" data-fragment-index="3"><i class="fas fa-exclamation-triangle"></i> The model just remembers 10h of training data !</div>
-			</div>
-		</div>
-		<img  class="fragment" style="margin-top:1%; float:right" width="60%" src="assets/fight.svg" alt="">
-	</section>
-
-	<section>
-		<h1>Fighting overfitting</h1>
-		<h2>Regularization with dropout</h2>
-		<img  style="margin-top:5%; float:left" width="30%" src="assets/dropout.gif" alt="">
-		<ul style="margin-top:5%;">
-			<li>Parts of the net randomly set to 0</li>
-			<li>No unit should be critical: <i>regularization</i></li>
-			<li>Probabilistic interpretation</li>
-		</ul>
-		<h6 style="margin-top:28%; color:gray">
-			N Srivastava, et al. "Dropout: a simple way to prevent neural networks from overfitting". JMLR. (2014) 15(1), 1929-1958.
-		</h6>
-	</section>
-
-	<section>
-		<h1>Fighting overfitting</h1>
-		<h2>Data augmentation</h2>
-		<ul>
-			<li>Artificially increase the size of the dataset
-				<ul style="color:gray"><small>
-					<div><i class="fas fa-book"></i> S. Uhlich "Improving music source separation based on deep neural networks through data augmentation and network blending." (2017) ICASSP</div>
-					<div><i class="fas fa-book"></i> A. Cohen-Hadria "Improving singing voice separation using Deep U-Net and Wave-U-Net with data augmentation."" arXiv 2019.</div>
-				</small></ul>
-			</li>
-		</ul>
-			<p>
-				<img width="100%" style="float:center; margin-top=10%" src="assets/random_sources.svg" alt="">
-
-	</section>
-
-	<section>
-		<h1>Fighting overfitting</h1>
-		<div class="container">
-			<div class="col_umx_l">
-				<img  width="80%" src="assets/UMX_vert.svg" alt="">
-			</div>
-			<div class="col_umx_r">
-				Before:
-				<img width="100%" src="assets/loss_realmagnitude.png" alt="">
-			</div>
-		</div>
-	</section>
-
-	<section>
-		<h1>Fighting overfitting</h1>
-		<div class="container">
-			<div class="col_umx_l">
-				<img  width="80%" src="assets/UMX_vert.svg" alt="">
-			</div>
-			<div class="col_umx_r">
-				After:
-				<img width="100%" src="assets/loss_umx.png" alt="">
-				<p>
-				$\Rightarrow$ <font color="green">Reach 6.3 dB vocals SDR on MUSDB18</font>
-			</div>
-		</div>
-	</section>
-
-	<section>
-		<h1>Fighting overfitting</h1>
-		<div class="container">
-			<div class="col_umx_l">
-				<img  width="80%" src="assets/UMX_vert.svg" alt="">
-			</div>
-			<div class="col_umx_r">
-				With <font color='red'>MUCH</font> more data:
-				<img width="100%" src="assets/loss_umxpro.png" alt="">
-				<p>
-				$\Rightarrow$ <font color="green">Reach 7.5 dB vocals SDR on MUSDB18</font>
-			</div>
-		</div>
-	</section>
-</section>
-<!-- TESTING -->
-<section>
-	<h1>Outline</h1>
-	<h2>Post-processing: filtering signals</h2>
-	<img  style="margin-top:2%; float:left" width="160%" src="assets/workflow4.svg" alt="">
-	<ul>
-		<div class='fragment'>$\Rightarrow$ <b>starting point</b> the multichannel Gaussian model</div>
-	</ul>
-</section>
-
-<section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_1.svg" alt="">
-	</section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_2.svg" alt="">
-	</section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_3.svg" alt="">
-	</section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_4.svg" alt="">
-	</section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_5.svg" alt="">
-	</section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_6.svg" alt="">
-	</section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_7.svg" alt="">
-	</section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_8.svg" alt="">
-	</section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_9.svg" alt="">
-	</section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_10.svg" alt="">
-	</section>
-	<section>
-		<h1>Multichannel Gaussian model</h1>
-		<img  style="margin-top:0%; float:left" width="100%" src="assets/stereo_explanation_11.svg" alt="">
-	</section>
-</section>
-
-<section>
-	<h1>Conclusion</h1>
-	<ul>
-		<li>Convergence of signal processing, probability theory and DL</li>
-		<li>Learning with limited amount of data</li>
-		<li>Model long term dependency</li>
-		<li>Representation learning for sound and music</li>
-		<li>Exploiting knowledge domain, user interaction</li>
-	</ul>
-	<p>
-	<h1>Resources</h1>
-	<ul>
-		<li>References and Software tools: <a href="https://sigsep.github.io">sigsep.github.io</a></li>
-		<li>Open-unmix website: <a href="https://open.unmix.app">open.unmix.app</a></li>
-	</ul>
-	<p>
-	<h1>Reference</h1>
-	<h6 style="margin-top:0%;color:gray">
-		F. Stöter et al, "Open-Unmix - A reference implementation for audio source separation", JOSS 2019.
-	</h6>
-</section>
-
-<section data-background="#333333">
-	<h1>Some demos</h1>
-	<iframe src='https://umxpro-demo.s3.eu-west-3.amazonaws.com/index.html' style='height:500px;width:100%'></iframe>
-</section>
 
 
 			</div>
